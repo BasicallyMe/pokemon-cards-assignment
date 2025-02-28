@@ -7,7 +7,6 @@ async function getPokemon(name: string) {
   try {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const response = await res.json();
-    console.log(response);
     return response;
   } catch (error) {
     console.log("Error while fetching pokemon", error);

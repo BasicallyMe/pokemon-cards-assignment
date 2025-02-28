@@ -15,7 +15,7 @@ type PokemonData = {
 
 async function getPokemons(id = null) {
   try {
-    const res = await fetch("https://pokeapi.co/api/v2/pokemon");
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
     const response = await res.json();
     return response;
   } catch (err) {
@@ -37,9 +37,24 @@ export default async function Home() {
         </p>
       </div>
       <section className="w-4xl">
+        <div className="flex justify-end mb-5 gap-3">
+          <input
+            placeholder="Search for a pokemon"
+            className="text-sm placeholder:text-xs placeholder:text-gray-500 border border-gray-300 rounded-md outline-offset-2 py-1 px-2"
+          />
+          <Link
+            href="/page/2"
+            className="text-sm bg-[#FFCB05] px-5 rounded-md flex items-center justify-center"
+          >
+            Next
+          </Link>
+        </div>
         <div className="flex items-center justify-center flex-wrap gap-4">
           {pokemons.results.map((pokemon) => (
-            <div key={pokemon.name} className="capitalize text-sm font-medium bg-amber-400 rounded-md py-1 px-3">
+            <div
+              key={pokemon.name}
+              className="capitalize text-sm font-medium bg-amber-400 rounded-md py-1 px-3"
+            >
               <Link href={`/pokemon/${pokemon?.name}`}>{pokemon.name}</Link>
             </div>
           ))}
