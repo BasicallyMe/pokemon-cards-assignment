@@ -1,4 +1,7 @@
 import Image from "next/image";
+import AbilityCard from "@/app/(components)/ability-card";
+import Badge from "@/app/(components)/badge";
+import Moves from "@/app/(components)/moves";
 
 async function getPokemon(name: string) {
   try {
@@ -31,6 +34,23 @@ export default async function Pokemon({
             width={300}
             height={300}
           />
+        </div>
+        <div className="flex-1 flex flex-col justify-center px-4">
+          <div className="mb-5">
+            <h2 className="capitalize text-xl font-bold mb-1">
+              {pokemon.name}
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {pokemon.types.map(
+                (type: {
+                  slot: number;
+                  type: { name: string; url: string };
+                }) => (
+                  <Badge name={type.type.name} key={type.type.name} />
+                )
+              )}
+            </div>
+          </div>
           <div className="flex w-sm py-4 gap-10">
             <div>
               <span className="font-medium text-sm text-gray-500">Height</span>
@@ -48,7 +68,7 @@ export default async function Pokemon({
             </div>
           </div>
           <div className="py-4 w-sm">
-            <h4 className="text-sm font-medium mb-3">Stats</h4>
+            <h4 className="text-sm font-medium mb-2">Stats</h4>
             <div className="flex gap-5 flex-wrap">
               {pokemon.stats.map(
                 (item: {
@@ -56,11 +76,14 @@ export default async function Pokemon({
                   effort: number;
                   stat: { name: string; url: string };
                 }) => (
-                  <div key={item.stat.name} className="flex gap-1">
-                    <span className="font-medium text-sm text-gray-500 capitalize">
+                  <div
+                    key={item.stat.name}
+                    className="flex gap-1 items-baseline"
+                  >
+                    <span className="font-medium text-xs text-gray-500 capitalize">
                       {item.stat.name}
                     </span>
-                    <div className="text-sm font-semibold">
+                    <div className="text-lg font-semibold">
                       {item.base_stat}
                     </div>
                   </div>
@@ -68,9 +91,21 @@ export default async function Pokemon({
               )}
             </div>
           </div>
-        </div>
-        <div className="flex-1 flex flex-col justify-center px-4">
-          <h2 className="capitalize text-4xl font-bold">{pokemon.name}</h2>
+          <div>
+            <h3 className="text-sm font-medium mb-3">Abilities</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {pokemon.abilities.map(
+                (item: {
+                  ability: { name: string; url: string };
+                  is_hidden: boolean;
+                  slot: number;
+                }) => (
+                  <AbilityCard key={item.ability.name} data={item} />
+                )
+              )}
+            </div>
+          </div>
+          <Moves data={pokemon.moves} />
         </div>
       </div>
     </div>
