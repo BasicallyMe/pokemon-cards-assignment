@@ -68,7 +68,7 @@ export default async function Pokemon({
           </div>
           <div className="py-4 w-sm">
             <h4 className="text-sm font-medium mb-2">Stats</h4>
-            <div className="flex gap-5 flex-wrap">
+            <div className="flex gap-2 flex-wrap">
               {pokemon.stats.map(
                 (item: {
                   base_stat: number;
@@ -90,8 +90,8 @@ export default async function Pokemon({
               )}
             </div>
           </div>
-          <div>
-            <h3 className="text-sm font-medium mb-3">Abilities</h3>
+          <div className="py-4">
+            <h4 className="text-sm font-medium mb-2">Abilities</h4>
             <div className="grid grid-cols-2 gap-3">
               {pokemon.abilities.map(
                 (item: {

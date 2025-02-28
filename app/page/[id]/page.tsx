@@ -53,13 +53,13 @@ export default async function CardsPage({
           <SearchComponent />
           <Link
             href={pageId > 2 ? `/page/${pageId - 1}` : "/"}
-            className="text-sm bg-[#FFCB05] px-5 rounded-md flex items-center justify-center"
+            className="text-sm bg-theme-primary px-5 rounded-md flex items-center justify-center"
           >
             Prev
           </Link>
           <Link
             href={`/page/${pageId + 1}`}
-            className="text-sm bg-[#FFCB05] px-5 rounded-md flex items-center justify-center"
+            className="text-sm bg-theme-primary px-5 rounded-md flex items-center justify-center"
           >
             Next
           </Link>
