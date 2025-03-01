@@ -10,7 +10,7 @@ export default function Navigation() {
     <div
       className={`h-28 w-full flex items-center ${
         pathname === "/" ? "justify-center" : "justify-start"
-      } fixed px-4 bg-white/40 backdrop-blur-sm`}
+      } fixed px-4 bg-white/10 backdrop-blur-sm z-50`}
     >
       <Link href="/">
         <Image src="/logo.png" width={200} height={100} alt="Placeholder" />

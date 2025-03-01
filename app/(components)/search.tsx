@@ -80,7 +80,7 @@ export default function SearchComponent() {
           )}
           {data && (
             <div className="flex">
-              <div className="flex-1 bg-gray-200 rounded-md flex items-center justify-center py-2">
+              <div className="flex-1 bg-theme-primary rounded-md flex items-center justify-center py-2">
                 <Image
                   src={data.sprites.other.showdown.front_default}
                   alt="Placeholder"

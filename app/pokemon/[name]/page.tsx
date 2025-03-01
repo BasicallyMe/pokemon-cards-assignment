@@ -33,7 +33,7 @@ export default async function Pokemon({
   }
 
   return (
-    <div className="w-full min-h-dvh flex justify-center py-4">
+    <div className="w-full min-h-dvh flex justify-center py-4 mt-28">
       <div className="w-4xl flex">
         <div className="flex-1 flex flex-col items-center justify-center">
           <Image
