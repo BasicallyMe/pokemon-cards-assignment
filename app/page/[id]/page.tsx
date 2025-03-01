@@ -27,12 +27,9 @@ function getPokemons(id: number) {
     .catch((err) => console.log(err));
 }
 
-export default async function CardsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  let { id } = await params;
+export default async function CardsPage(props: { params: Promise<{ id: string }>}) {
+  const params = await props.params;
+  const id = params.id;
   let pageId: number = parseInt(id);
   const pokemons: Promise<PokemonData> = getPokemons(pageId);
   const next = (await pokemons).next;
