@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 type PokemonItem = {
   name: string;
@@ -15,11 +16,12 @@ type PokemonData = {
 
 async function getPokemons(id = null) {
   try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
+    const res = await fetch(`https://pokeapi.co/api/v2/pomon?limit=10`);
     const response = await res.json();
     return response;
   } catch (err) {
-    console.log(err);
+    console.log('Handling error', err);
+    notFound();
   }
 }
 
