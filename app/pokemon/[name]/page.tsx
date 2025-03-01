@@ -2,14 +2,19 @@ import Image from "next/image";
 import AbilityCard from "@/app/(components)/ability-card";
 import Badge from "@/app/(components)/badge";
 import Moves from "@/app/(components)/moves";
+import { notFound } from "next/navigation";
 
 async function getPokemon(name: string) {
   try {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const response = await res.json();
-    return response;
+    if (response) {
+      return response;
+    }
+    return null;
   } catch (error) {
-    console.log("Error while fetching pokemon", error);
+    console.log("Error", error);
+    notFound();
   }
 }
 
@@ -22,6 +27,10 @@ export default async function Pokemon({
   const pokemon: Awaited<ReturnType<typeof getPokemon>> = await getPokemon(
     name
   );
+
+  if (!pokemon) {
+    notFound();
+  }
 
   return (
     <div className="w-full min-h-dvh flex justify-center py-4">

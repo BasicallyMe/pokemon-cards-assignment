@@ -57,22 +57,30 @@ export default async function CardsPage({
           >
             Prev
           </Link>
-          <Link
-            href={`/page/${pageId + 1}`}
-            className="text-sm bg-theme-primary px-5 rounded-md flex items-center justify-center"
-          >
-            Next
-          </Link>
+          {pokemons.next && (
+            <Link
+              href={`/page/${pageId + 1}`}
+              className="text-sm bg-theme-primary px-5 rounded-md flex items-center justify-center"
+            >
+              Next
+            </Link>
+          )}
         </div>
         <div className="flex items-center justify-center flex-wrap gap-4">
-          {pokemons.results.map((pokemon) => (
-            <div
-              key={pokemon.name}
-              className="capitalize text-sm font-medium bg-amber-400 rounded-md py-1 px-3"
-            >
-              <Link href={`/pokemon/${pokemon?.name}`}>{pokemon.name}</Link>
+          {pokemons.results.length === 0 ? (
+            <div className="text-xs text-theme-primary">
+              {"No new pokemons in this area. Please try something different"}
             </div>
-          ))}
+          ) : (
+            pokemons.results.map((pokemon) => (
+              <div
+                key={pokemon.name}
+                className="capitalize text-sm font-medium bg-amber-400 rounded-md py-1 px-3"
+              >
+                <Link href={`/pokemon/${pokemon?.name}`}>{pokemon.name}</Link>
+              </div>
+            ))
+          )}
         </div>
       </section>
     </div>
