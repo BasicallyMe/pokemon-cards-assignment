@@ -23,6 +23,16 @@ async function getAbilities(url: string) {
 export default async function AbilityCard({ data }: { data: AbilityData }) {
   const { error, ability }: { error: boolean; ability: Ability } =
     await getAbilities(data.ability.url);
+
+  if (error) {
+    console.log('Rendering error');
+    return (
+      <div>
+        <p className="text-xs text-gray-400">{"Couldn't load ability"}</p>
+      </div>
+    )
+  }
+
   return (
     <div>
       <h4 className="text-sm capitalize font-medium">

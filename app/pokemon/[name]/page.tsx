@@ -44,31 +44,39 @@ export default async function Pokemon({
           />
         </div>
         <div className="flex-1 flex flex-col justify-center px-4">
-          <div className="mb-5">
-            <h2 className="capitalize text-xl font-bold mb-1">
-              {pokemon.name}
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {pokemon.types.map(
-                (type: {
-                  slot: number;
-                  type: { name: string; url: string };
-                }) => (
-                  <Badge name={type.type.name} key={type.type.name} />
-                )
-              )}
+          <div className="mb-5 flex items-center gap-4">
+            <Image
+              src={pokemon.sprites.other.showdown.front_default}
+              width={40}
+              height={40}
+              alt="Placeholder"
+            />
+            <div className="flex flex-col">
+              <h2 className="capitalize text-xl font-bold mb-1">
+                {pokemon.name}
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {pokemon.types.map(
+                  (type: {
+                    slot: number;
+                    type: { name: string; url: string };
+                  }) => (
+                    <Badge name={type.type.name} key={type.type.name} />
+                  )
+                )}
+              </div>
             </div>
           </div>
           <div className="flex w-sm py-4 gap-10">
             <div>
-              <span className="font-medium text-sm text-gray-500">Height</span>
+              <span className="font-medium text-xs text-gray-500">Height</span>
               <div>
                 {pokemon.height * 10}
                 <span className="text-xs text-gray-600 ml-1">cms</span>
               </div>
             </div>
             <div>
-              <span className="font-medium text-sm text-gray-500">Weight</span>
+              <span className="font-medium text-xs text-gray-500">Weight</span>
               <div>
                 {pokemon.weight * 100}
                 <span className="text-xs text-gray-600 ml-1">gms</span>

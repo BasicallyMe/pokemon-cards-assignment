@@ -1,4 +1,4 @@
-export const API_LIMIT = 10;
+export const API_LIMIT = 8;
 
 export const typeColors: Record<string, string> = {
   normal: "bg-gray-400",

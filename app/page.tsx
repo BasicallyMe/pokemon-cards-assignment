@@ -1,6 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
+import CardsWrapper from "./(components)/cards-wrapper";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { API_LIMIT } from "@/utils/helpers";
 
 type PokemonItem = {
   name: string;
@@ -14,19 +16,14 @@ type PokemonData = {
   results: PokemonItem[];
 };
 
-async function getPokemons(id = null) {
-  try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pomon?limit=10`);
-    const response = await res.json();
-    return response;
-  } catch (err) {
-    console.log('Handling error', err);
-    notFound();
-  }
+function getPokemons() {
+  return fetch(`https://pokeapi.co/api/v2/pokemon?limit=${API_LIMIT}`)
+    .then((res) => res.json())
+    .catch((err) => notFound());
 }
 
 export default async function Home() {
-  const pokemons: PokemonData = await getPokemons();
+  const pokemons: Promise<PokemonData> = getPokemons();
   return (
     <div className="w-full h-full flex flex-col items-center">
       <div className="h-lvh flex items-center justify-center">
@@ -38,7 +35,7 @@ export default async function Home() {
           Poké Ball, which allows them to be carried around.
         </p>
       </div>
-      <section className="w-4xl">
+      <section className="max-w-4xl">
         <div className="flex justify-end mb-5 gap-3">
           <input
             placeholder="Search for a pokemon"
@@ -51,16 +48,9 @@ export default async function Home() {
             Next
           </Link>
         </div>
-        <div className="flex items-center justify-center flex-wrap gap-4">
-          {pokemons.results.map((pokemon) => (
-            <div
-              key={pokemon.name}
-              className="capitalize text-sm font-medium bg-amber-400 rounded-md py-1 px-3"
-            >
-              <Link href={`/pokemon/${pokemon?.name}`}>{pokemon.name}</Link>
-            </div>
-          ))}
-        </div>
+        <Suspense fallback={<div>Loading pokemon cards...</div>}>
+          <CardsWrapper data={pokemons} />
+        </Suspense>
       </section>
     </div>
   );

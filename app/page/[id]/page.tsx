@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { API_LIMIT } from "@/utils/helpers";
+import CardsWrapper from "@/app/(components)/cards-wrapper";
 import SearchComponent from "@/app/(components)/search";
+import { Suspense } from "react";
 
 type PokemonItem = {
   name: string;
@@ -14,19 +16,29 @@ type PokemonData = {
   results: PokemonItem[];
 };
 
-async function getPokemons(id: number) {
-  try {
-    const res = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=${API_LIMIT}&offset=${
-        (id - 1) * API_LIMIT
-      }`
-    );
-    const response = await res.json();
-    return response;
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
+// async function getPokemons(id: number) {
+//   try {
+//     const res = await fetch(
+//       `https://pokeapi.co/api/v2/pokemon?limit=${API_LIMIT}&offset=${
+//         (id - 1) * API_LIMIT
+//       }`
+//     );
+//     const response = await res.json();
+//     return response;
+//   } catch (err) {
+//     console.log(err);
+//     return null;
+//   }
+// }
+
+function getPokemons(id: number) {
+  return fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=${API_LIMIT}&offset=${
+      (id - 1) * API_LIMIT
+    }`
+  )
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 }
 
 export default async function CardsPage({
@@ -36,7 +48,9 @@ export default async function CardsPage({
 }) {
   let { id } = await params;
   let pageId: number = parseInt(id);
-  const pokemons: PokemonData = await getPokemons(pageId);
+  const pokemons: Promise<PokemonData> = getPokemons(pageId);
+  const next = (await pokemons).next;
+  const prev = (await pokemons).previous;
   return (
     <div className="w-full h-full flex flex-col items-center">
       <div className="h-60 flex items-center justify-center">
@@ -48,7 +62,7 @@ export default async function CardsPage({
           Poké Ball, which allows them to be carried around.
         </p>
       </div>
-      <section className="w-4xl">
+      <section className="max-w-4xl">
         <div className="flex justify-end mb-5 gap-3">
           <SearchComponent />
           <Link
@@ -57,7 +71,7 @@ export default async function CardsPage({
           >
             Prev
           </Link>
-          {pokemons.next && (
+          {next && (
             <Link
               href={`/page/${pageId + 1}`}
               className="text-sm bg-theme-primary px-5 rounded-md flex items-center justify-center"
@@ -66,22 +80,9 @@ export default async function CardsPage({
             </Link>
           )}
         </div>
-        <div className="flex items-center justify-center flex-wrap gap-4">
-          {pokemons.results.length === 0 ? (
-            <div className="text-xs text-theme-primary">
-              {"No new pokemons in this area. Please try something different"}
-            </div>
-          ) : (
-            pokemons.results.map((pokemon) => (
-              <div
-                key={pokemon.name}
-                className="capitalize text-sm font-medium bg-amber-400 rounded-md py-1 px-3"
-              >
-                <Link href={`/pokemon/${pokemon?.name}`}>{pokemon.name}</Link>
-              </div>
-            ))
-          )}
-        </div>
+        <Suspense fallback={<div>Loading pokemon cards...</div>}>
+          <CardsWrapper data={pokemons} />
+        </Suspense>
       </section>
     </div>
   );

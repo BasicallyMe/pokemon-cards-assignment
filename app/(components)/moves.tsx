@@ -15,9 +15,9 @@ export default function Moves({ data }: { data: Move[] }) {
         {data.slice(0, 10).map((item) => (
           <button
             key={item.move.name}
-            className="text-xs capitalize bg-yellow-300 rounded-md py-1 px-3"
+            className="text-xs capitalize bg-theme-primary rounded-md py-1 px-3"
           >
-            {item.move.name}
+            {item.move.name.replace("-", " ")}
           </button>
         ))}
         {data.length > 10 && (
