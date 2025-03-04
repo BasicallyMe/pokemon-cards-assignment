@@ -1,25 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
-import { API_LIMIT } from "@/utils/helpers";
+import { API_LIMIT, API_URL } from "@/utils/helpers";
 import CardsWrapper from "@/app/(components)/cards-wrapper";
 import SearchComponent from "@/app/(components)/search";
+import { PokemonData } from "@/types/Pokemon";
 import { Suspense } from "react";
-
-type PokemonItem = {
-  name: string;
-  url: string;
-};
-
-type PokemonData = {
-  count: number;
-  next: string;
-  previous: string;
-  results: PokemonItem[];
-};
 
 function getPokemons(id: number) {
   return fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${API_LIMIT}&offset=${
+    `${API_URL}?limit=${API_LIMIT}&offset=${
       (id - 1) * API_LIMIT
     }`
   )

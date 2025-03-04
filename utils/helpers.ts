@@ -23,3 +23,5 @@ export const typeColors: Record<string, string> = {
   unknown: "bg-gray-600",
   shadow: "bg-gray-900",
 };
+
+export const API_URL = "https://pokeapi.co/api/v2/pokemon"

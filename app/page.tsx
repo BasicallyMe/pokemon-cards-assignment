@@ -2,23 +2,12 @@ import Link from "next/link";
 import CardsWrapper from "./(components)/cards-wrapper";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { API_LIMIT } from "@/utils/helpers";
+import { API_LIMIT, API_URL } from "@/utils/helpers";
+import { PokemonData } from "@/types/Pokemon";
 import Image from "next/image";
 
-type PokemonItem = {
-  name: string;
-  url: string;
-};
-
-type PokemonData = {
-  count: number;
-  next: string;
-  previous: string;
-  results: PokemonItem[];
-};
-
 function getPokemons() {
-  return fetch(`https://pokeapi.co/api/v2/pokemon?limit=${API_LIMIT}`, {
+  return fetch(`${API_URL}?limit=${API_LIMIT}`, {
     cache: "force-cache",
   })
     .then((res) => res.json())
